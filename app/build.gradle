@@ -25,5 +25,16 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile(name: 'MyScript_ATK-Core-android-component', ext: 'aar')
+    compile(name: 'MyScript_ATK-Math-android-component', ext: 'aar')
+    compile(name: 'MyScript_ATK-MathWidget-android-widget', ext: 'aar')
     testCompile 'junit:junit:4.12'
+}
+
+repositories{
+    flatDir{
+        dirs 'libs'
+    }
 }
