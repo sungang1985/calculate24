@@ -1,6 +1,11 @@
 package com.nari.sungang.calculate24;
 
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +18,7 @@ import android.widget.Toast;
 
 import com.myscript.atk.math.widget.MathWidgetApi;
 
+import java.io.File;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements
@@ -38,19 +44,34 @@ public class MainActivity extends AppCompatActivity implements
     private MathWidgetApi widget;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
-    private Button button;
+    private Button submitBtn;
+    private Button shareBtn;
+    private String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        button = (Button) findViewById(R.id.action_submit);
-        button.setOnClickListener(new View.OnClickListener() {
+        submitBtn = (Button) findViewById(R.id.action_submit);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
         });
+
+        shareBtn = (Button) findViewById(R.id.action_share);
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+                Bitmap bm = ScreenShot.getScreenShot(rootView);
+                String fileName = String.valueOf(System.currentTimeMillis()) + ".png";
+                filePath = ScreenShot.store(bm, fileName);
+                shareImage(filePath);
+            }
+        });
+
         initRecyclerView();
         widget = (MathWidgetApi) findViewById(R.id.math_widget);
         if (!widget.registerCertificate(MyCertificate.getBytes())) {
@@ -136,6 +157,23 @@ public class MainActivity extends AppCompatActivity implements
         if (widget.getResultAsText().equals(resultAsText) && resultAsText.contains("=24")) {
             adapter.resetPokers(new int[]{pokers[random.nextInt(52)], pokers[random.nextInt(52)], pokers[random.nextInt(52)], pokers[random.nextInt(52)]});
             return;
+        }
+    }
+
+    private void shareImage(String dirPath) {
+        Uri uri = Uri.fromFile(new File(dirPath));
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        try {
+            intent.setComponent(new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI"));
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(MainActivity.this, "No App Available", Toast.LENGTH_SHORT).show();
         }
     }
 }
