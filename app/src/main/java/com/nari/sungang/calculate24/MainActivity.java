@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements
             R.drawable.dnd06, R.drawable.dnd07, R.drawable.dnd08, R.drawable.dnd09,
             R.drawable.dnd10, R.drawable.dndjack, R.drawable.dndqueen, R.drawable.dndking};
 
-    private String resultAsText = "";
     private MathWidgetApi widget;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
        /* submitBtn = (Button) findViewById(R.id.action_submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -158,15 +156,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onRecognitionEnd(MathWidgetApi widget) {
+    public synchronized void onRecognitionEnd(MathWidgetApi widget) {
         //Toast.makeText(getApplicationContext(), "Recognition update", Toast.LENGTH_SHORT).show();
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Math Widget recognition: " + widget.getResultAsText());
         }
 
-        resultAsText = widget.getResultAsText();
-        if (widget.getResultAsText().equals(resultAsText) && resultAsText.contains("=24")) {
+        if (widget.getResultAsText().contains("=24")) {
             adapter.resetPokers(new int[]{pokers[random.nextInt(52)], pokers[random.nextInt(52)], pokers[random.nextInt(52)], pokers[random.nextInt(52)]});
+            widget.clear(true);
             return;
         }
     }
