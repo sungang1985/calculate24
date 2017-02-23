@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,8 +45,9 @@ public class MainActivity extends AppCompatActivity implements
     private MathWidgetApi widget;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
-    private Button submitBtn;
-    private Button shareBtn;
+    //private Button submitBtn;
+    //private Button shareBtn;
+    private FloatingActionButton submitFab;
     private String filePath;
 
     @Override
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        submitBtn = (Button) findViewById(R.id.action_submit);
+       /* submitBtn = (Button) findViewById(R.id.action_submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +72,18 @@ public class MainActivity extends AppCompatActivity implements
                 filePath = ScreenShot.store(bm, fileName);
                 shareImage(filePath);
             }
+        });*/
+
+        submitFab = (FloatingActionButton) findViewById(R.id.action_submit);
+        submitFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Click fab!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         initRecyclerView();
+
         widget = (MathWidgetApi) findViewById(R.id.math_widget);
         if (!widget.registerCertificate(MyCertificate.getBytes())) {
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);

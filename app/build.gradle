@@ -30,7 +30,6 @@ dependencies {
     compile(name: 'MyScript_ATK-Core-android-component', ext: 'aar')
     compile(name: 'MyScript_ATK-Math-android-component', ext: 'aar')
     compile(name: 'MyScript_ATK-MathWidget-android-widget', ext: 'aar')
-    compile 'com.github.medyo:fancybuttons:1.8.3'
     testCompile 'junit:junit:4.12'
 }
 
