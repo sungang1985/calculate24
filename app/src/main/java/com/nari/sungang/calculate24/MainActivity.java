@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerViewAdapter adapter;
     //private Button submitBtn;
     //private Button shareBtn;
-    private FloatingActionButton submitFab;
+    //private FloatingActionButton submitFab;
     private String filePath;
 
     @Override
@@ -72,13 +72,13 @@ public class MainActivity extends AppCompatActivity implements
             }
         });*/
 
-        submitFab = (FloatingActionButton) findViewById(R.id.action_submit);
+        /*submitFab = (FloatingActionButton) findViewById(R.id.action_submit);
         submitFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Click fab!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         initRecyclerView();
 
