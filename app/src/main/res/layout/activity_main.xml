@@ -21,11 +21,11 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:gravity="center"
-            android:shadowColor="#2eaed9"
+            android:shadowColor="#000000"
             android:shadowDx="4"
             android:shadowDy="4"
             android:shadowRadius="4"
-            android:text="0/28561"
+            android:text="0/270725"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
@@ -37,11 +37,11 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:gravity="center"
-            android:shadowColor="#2eaed9"
+            android:shadowColor="#000000"
             android:shadowDx="4"
             android:shadowDy="4"
             android:shadowRadius="4"
-            android:text="00:60"
+            android:text="00:00"
             android:textColor="#FFFFFF"
             android:textSize="20dp" />
     </RelativeLayout>

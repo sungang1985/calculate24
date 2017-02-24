@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.myscript.atk.math.widget.MathWidgetApi;
 
 import java.io.File;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements
@@ -163,6 +164,10 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         if (widget.getResultAsText().contains("=24")) {
+            List<MathWidgetApi.Symbol> symbols = widget.getResultAsSymbolList();
+            for (MathWidgetApi.Symbol symbol : symbols) {
+                Log.d(TAG, "Math Widget recognition symbol: " + symbol.label.toString());
+            }
             adapter.resetPokers(new int[]{pokers[random.nextInt(52)], pokers[random.nextInt(52)], pokers[random.nextInt(52)], pokers[random.nextInt(52)]});
             widget.clear(true);
             return;
