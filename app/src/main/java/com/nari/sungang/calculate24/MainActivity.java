@@ -1,20 +1,23 @@
 package com.nari.sungang.calculate24;
 
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myscript.atk.math.widget.MathWidgetApi;
@@ -113,6 +116,32 @@ public class MainActivity extends AppCompatActivity implements
         // "math" references the conf/math/math.conf file in your assets.
         // "standard" references the configuration name in math.conf
         widget.configure("math", "standard");
+
+        countDown(4);
+
+    }
+
+    private void countDown(int seconds) {
+        final Dialog dialog = new Dialog(MainActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        View view = inflater.inflate(R.layout.countdown_item, null);
+        final TextView countText = (TextView) view.findViewById(R.id.count_text);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+
+        new CountDownTimer(1000 * seconds, 1000) {//总时间， 间隔时间
+            public void onTick(long millisUntilFinished) {
+                countText.setText(millisUntilFinished / 1000 + "");
+            }
+
+            public void onFinish() {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        }.start();
     }
 
     private void initRecyclerView() {
