@@ -20,6 +20,9 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.majeur.cling.Cling;
+import com.majeur.cling.ClingManager;
+import com.majeur.cling.ViewTarget;
 import com.myscript.atk.math.widget.MathWidgetApi;
 
 import java.io.File;
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements
     //private Button shareBtn;
     //private FloatingActionButton submitFab;
     private String filePath;
+
+    private ClingManager mClingManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +122,41 @@ public class MainActivity extends AppCompatActivity implements
         // "standard" references the configuration name in math.conf
         widget.configure("math", "standard");
 
-        countDown(4);
+        //countDown(4);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mClingManager = new ClingManager(this);
+
+        mClingManager.addCling(new Cling.Builder(this)
+                .setTitle("Welcome to this app")
+                .setContent("This application is meant to be the best app you will ever try on android.")
+                .build());
+
+        mClingManager.addCling(new Cling.Builder(this)
+                .setTitle("MathWidget")
+                .setContent("请在这里书写计算公式")
+                .setTarget(new ViewTarget(this, R.id.mathLineLayout))
+                .build());
+
+        mClingManager.setCallbacks(new ClingManager.Callbacks() {
+
+            @Override
+            public void onClingHide(int position) {
+                switch (position) {
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+
+                }
+            }
+        });
+        mClingManager.start();
     }
 
     private void countDown(int seconds) {
