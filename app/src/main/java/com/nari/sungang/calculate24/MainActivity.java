@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.majeur.cling.ActionItemTarget;
 import com.majeur.cling.Cling;
 import com.majeur.cling.ClingManager;
 import com.majeur.cling.ViewTarget;
@@ -135,6 +136,18 @@ public class MainActivity extends AppCompatActivity implements
         mClingManager.addCling(new Cling.Builder(this)
                 .setTitle("Welcome to this app")
                 .setContent("This application is meant to be the best app you will ever try on android.")
+                .build());
+
+        mClingManager.addCling(new Cling.Builder(this)
+                .setTitle("局数")
+                .setContent("一共270725局数")
+                .setTarget(new ActionItemTarget(this, R.id.score_text))
+                .build());
+
+        mClingManager.addCling(new Cling.Builder(this)
+                .setTitle("时间")
+                .setContent("每局时间限制为60秒")
+                .setTarget(new ActionItemTarget(this, R.id.time_text))
                 .build());
 
         mClingManager.addCling(new Cling.Builder(this)

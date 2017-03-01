@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.Xfermode;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -133,13 +134,15 @@ class ClingView extends FrameLayout {
         if (mTarget.isValid()) {
             final int targetWidth = (int) Math.min(mTarget.getWidth(), getWidth() * 0.6666f);
             final int targetHeight = (int) Math.min(mTarget.getHeight(), getHeight() * 0.6666f);
-            final float size = Math.max(targetWidth, targetHeight) * 1.2f;
+            final float size = Math.min(targetWidth, targetHeight) * 1.2f;
 
-            mTargetBitmap = Bitmap.createBitmap((int) size, (int) size, Bitmap.Config.ARGB_4444);
+            //mTargetBitmap = Bitmap.createBitmap((int) size, (int) size, Bitmap.Config.ARGB_4444);
+            mTargetBitmap = Bitmap.createBitmap(mTarget.getWidth(), mTarget.getHeight(), Bitmap.Config.ARGB_4444);
             Canvas canvas = new Canvas(mTargetBitmap);
             canvas.drawColor(mClingColor);
             mPaint.setXfermode(XFERMODE_CLEAR);
-            canvas.drawCircle(size / 2, size / 2, size / 2, mPaint);
+            //canvas.drawCircle(size / 2, size / 2, size / 2, mPaint);
+            canvas.drawRect(new Rect(0, 0, mTarget.getWidth(), mTarget.getHeight()), mPaint);
             mPaint.setXfermode(null);
 
             mTargetPoint = mTarget.getCenterLocation();
